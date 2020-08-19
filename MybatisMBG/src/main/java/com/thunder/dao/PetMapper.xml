@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thunder.dao.PetMapper">
+  <resultMap id="BaseResultMap" type="com.thunder.pojo.Pet">
+    <id column="petId" jdbcType="BIGINT" property="petid" />
+    <result column="petName" jdbcType="VARCHAR" property="petname" />
+    <result column="petBreed" jdbcType="INTEGER" property="petbreed" />
+    <result column="petSex" jdbcType="INTEGER" property="petsex" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    petId, petName, petBreed, petSex, birthday, description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_pet
+    where petId = #{petid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_pet
+    where petId = #{petid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.thunder.pojo.Pet">
+    insert into tb_pet (petId, petName, petBreed, 
+      petSex, birthday, description
+      )
+    values (#{petid,jdbcType=BIGINT}, #{petname,jdbcType=VARCHAR}, #{petbreed,jdbcType=INTEGER}, 
+      #{petsex,jdbcType=INTEGER}, #{birthday,jdbcType=DATE}, #{description,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.thunder.pojo.Pet">
+    insert into tb_pet
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="petid != null">
+        petId,
+      </if>
+      <if test="petname != null">
+        petName,
+      </if>
+      <if test="petbreed != null">
+        petBreed,
+      </if>
+      <if test="petsex != null">
+        petSex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="petid != null">
+        #{petid,jdbcType=BIGINT},
+      </if>
+      <if test="petname != null">
+        #{petname,jdbcType=VARCHAR},
+      </if>
+      <if test="petbreed != null">
+        #{petbreed,jdbcType=INTEGER},
+      </if>
+      <if test="petsex != null">
+        #{petsex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.thunder.pojo.Pet">
+    update tb_pet
+    <set>
+      <if test="petname != null">
+        petName = #{petname,jdbcType=VARCHAR},
+      </if>
+      <if test="petbreed != null">
+        petBreed = #{petbreed,jdbcType=INTEGER},
+      </if>
+      <if test="petsex != null">
+        petSex = #{petsex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where petId = #{petid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.thunder.pojo.Pet">
+    update tb_pet
+    set petName = #{petname,jdbcType=VARCHAR},
+      petBreed = #{petbreed,jdbcType=INTEGER},
+      petSex = #{petsex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=DATE},
+      description = #{description,jdbcType=VARCHAR}
+    where petId = #{petid,jdbcType=BIGINT}
+  </update>
+</mapper>
